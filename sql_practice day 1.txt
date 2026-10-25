@@ -1,0 +1,265 @@
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\MAC>mysql -u root -p
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| banking_db         |
+| batch1334          |
+| classowrk_db       |
+| classwork_db       |
+| college            |
+| college_db         |
+| comapny_db         |
+| company_db         |
+| ecdac              |
+| employees          |
+| hr_db              |
+| information_schema |
+| keys_db            |
+| library_db         |
+| manager            |
+| mysql              |
+| performance_schema |
+| school             |
+| student_db         |
+| sys                |
+| xyz                |
++--------------------+
+21 rows in set (0.01 sec)
+
+mysql> use employees;
+Database changed
+mysql> show tables;
++---------------------+
+| Tables_in_employees |
++---------------------+
+| department          |
+| employees           |
++---------------------+
+2 rows in set (0.01 sec)
+
+mysql> desc employees;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| employee_id   | int           | NO   | PRI | NULL    |       |
+| employee_name | varchar(50)   | YES  |     | NULL    |       |
+| department_id | int           | YES  |     | NULL    |       |
+| salary        | decimal(10,2) | YES  |     | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> desc  department;
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| department_id   | int         | NO   | PRI | NULL    |       |
+| department_name | varchar(50) | YES  |     | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employees;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           1 | Amit          |           101 | 50000.00 |
+|           2 | Priya         |           102 | 60000.00 |
+|           3 | Rahul         |           101 | 70000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           5 | Sneha         |          NULL | 55000.00 |
+|           6 | priya         |           106 | 30000.00 |
+|           7 | shree         |           109 | 30000.00 |
++-------------+---------------+---------------+----------+
+7 rows in set (0.03 sec)
+
+mysql> select * from employees
+    -> where salary > 40000;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           1 | Amit          |           101 | 50000.00 |
+|           2 | Priya         |           102 | 60000.00 |
+|           3 | Rahul         |           101 | 70000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           5 | Sneha         |          NULL | 55000.00 |
++-------------+---------------+---------------+----------+
+5 rows in set (0.01 sec)
+
+mysql> Select  employee_name ,salary
+    -> From employees
+    -> Where salary >40000;
++---------------+----------+
+| employee_name | salary   |
++---------------+----------+
+| Amit          | 50000.00 |
+| Priya         | 60000.00 |
+| Rahul         | 70000.00 |
+| Neha          | 45000.00 |
+| Sneha         | 55000.00 |
++---------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employees
+    -> ORDER BY salary DESC;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           3 | Rahul         |           101 | 70000.00 |
+|           2 | Priya         |           102 | 60000.00 |
+|           5 | Sneha         |          NULL | 55000.00 |
+|           1 | Amit          |           101 | 50000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           6 | priya         |           106 | 30000.00 |
+|           7 | shree         |           109 | 30000.00 |
++-------------+---------------+---------------+----------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employees
+    -> where salary >30000 AND < 60000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '< 60000' at line 2
+mysql> SELECT * FROM employees
+    -> WHERE salary > 30000 And salary < 60000;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           1 | Amit          |           101 | 50000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           5 | Sneha         |          NULL | 55000.00 |
++-------------+---------------+---------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from employees
+    -> /c^C
+mysql> select count* from employees;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from employees' at line 1
+mysql> SELECT count* from employees;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from employees' at line 1
+mysql> SELECT count(*) from employees;
++----------+
+| count(*) |
++----------+
+|        7 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select disinct * from employees;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from employees' at line 1
+mysql> SELECT DISTINCT depatment_id
+    -> from employees;
+ERROR 1054 (42S22): Unknown column 'depatment_id' in 'field list'
+mysql> SELECT DISTINCT department_id
+    -> FROM employees;
++---------------+
+| department_id |
++---------------+
+|           101 |
+|           102 |
+|           103 |
+|          NULL |
+|           106 |
+|           109 |
++---------------+
+6 rows in set (0.01 sec)
+
+mysql> SELECT department_id,SUM(salary)
+    -> from employees
+    -> group by department_id;
++---------------+-------------+
+| department_id | SUM(salary) |
++---------------+-------------+
+|           101 |   120000.00 |
+|           102 |    60000.00 |
+|           103 |    45000.00 |
+|          NULL |    55000.00 |
+|           106 |    30000.00 |
+|           109 |    30000.00 |
++---------------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT employees , MAX(salary) FROM employees;
+ERROR 1054 (42S22): Unknown column 'employees' in 'field list'
+mysql> SELECT DISTINCT department_id
+    -> FROM employees;
++---------------+
+| department_id |
++---------------+
+|           101 |
+|           102 |
+|           103 |
+|          NULL |
+|           106 |
+|           109 |
++---------------+
+6 rows in set (0.00 sec)
+
+mysql> UPDATE employees
+    -> set salary = 55000
+    -> WHERE employee_id = 3;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> DELETE FROM employees
+    -> WHERE employee_id = 5;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> exit;
+Bye
+
+C:\Users\MAC>cd Desktop
+
+C:\Users\MAC\Desktop>mkdir SQL-Practice
+
+C:\Users\MAC\Desktop>cd SQL-Practice
+
+C:\Users\MAC\Desktop\SQL-Practice>notepad sql_practice.sql
+
+C:\Users\MAC\Desktop\SQL-Practice>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
