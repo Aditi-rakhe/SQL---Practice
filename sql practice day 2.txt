@@ -1,0 +1,110 @@
+Microsoft Windows [Version 10.0.19045.7417]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\MAC>mysql -u root  -p
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| banking_db         |
+| batch1334          |
+| classowrk_db       |
+| classwork_db       |
+| college            |
+| college_db         |
+| comapny_db         |
+| company_db         |
+| ecdac              |
+| employees          |
+| hr_db              |
+| information_schema |
+| keys_db            |
+| library_db         |
+| manager            |
+| mysql              |
+| performance_schema |
+| school             |
+| student_db         |
+| sys                |
+| xyz                |
++--------------------+
+21 rows in set (0.03 sec)
+
+mysql>
+mysql>
+mysql> use employees;
+Database changed
+mysql> SELECT* FROM employees;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           1 | Amit          |           101 | 50000.00 |
+|           2 | Priya         |           102 | 60000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           6 | priya         |           106 | 30000.00 |
+|           7 | shree         |           109 | 30000.00 |
++-------------+---------------+---------------+----------+
+6 rows in set (0.03 sec)
+
+mysql> SELECT *
+    -> FROM employees
+    -> WHERE salary > 30000
+    -> ORDER BY salary DESC;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           2 | Priya         |           102 | 60000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
+|           1 | Amit          |           101 | 50000.00 |
+|           4 | Neha          |           103 | 45000.00 |
++-------------+---------------+---------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT department_id, SUM(salary) AS total_salary
+    -> FROM employees
+    -> GROUP BY department_id
+    -> HAVING SUM(salary) > 70000;
++---------------+--------------+
+| department_id | total_salary |
++---------------+--------------+
+|           101 |    105000.00 |
++---------------+--------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT SUM(salary)
+    -> FROM employees;
++-------------+
+| SUM(salary) |
++-------------+
+|   270000.00 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT employee_name, salary
+    -> FROM employees
+    -> WHERE salary > (
+    ->     SELECT AVG(salary)
+    ->     FROM employees
+    -> );
++---------------+----------+
+| employee_name | salary   |
++---------------+----------+
+| Amit          | 50000.00 |
+| Priya         | 60000.00 |
+| Rahul         | 55000.00 |
++---------------+----------+
+3 rows in set (0.00 sec)
