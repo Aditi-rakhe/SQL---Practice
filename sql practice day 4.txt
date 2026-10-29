@@ -1,0 +1,144 @@
+Microsoft Windows [Version 10.0.19045.7417]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\MAC>mysql -u root -p
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| banking_db         |
+| batch1334          |
+| classowrk_db       |
+| classwork_db       |
+| college            |
+| college_db         |
+| comapny_db         |
+| company_db         |
+| ecdac              |
+| employees          |
+| hr_db              |
+| information_schema |
+| keys_db            |
+| library_db         |
+| manager            |
+| mysql              |
+| performance_schema |
+| school             |
+| student_db         |
+| sys                |
+| xyz                |
++--------------------+
+21 rows in set (0.04 sec)
+
+mysql>  use employees;
+Database changed
+mysql> SELECT * FROM employees
+    -> WHERE salary BETWEEN 2000 AND 50000;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           1 | Amit          |           101 | 50000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           6 | priya         |           106 | 30000.00 |
+|           7 | shree         |           109 | 30000.00 |
++-------------+---------------+---------------+----------+
+4 rows in set (0.02 sec)
+
+mysql> SELECT *
+    -> FROM employees
+    -> where employee_name LIKE 'A%':
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':' at line 3
+mysql> SELECT *
+    -> FROM employees
+    -> WHERE employee_name Like 'A%';
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           1 | Amit          |           101 | 50000.00 |
++-------------+---------------+---------------+----------+
+1 row in set (0.01 sec)
+
+mysql> SELECT *
+    -> FROM employees
+    -> WHERE city IN ('PUNE','Mumbai');
+ERROR 1054 (42S22): Unknown column 'city' in 'where clause'
+mysql> SELECT *
+    -> FROM employees
+    -> WHEREcity in('pune', 'Mumbai');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in('pune', 'Mumbai')' at line 3
+mysql> SELECT *
+    -> FROM employees
+    -> WHERE city IN ('Pune', 'Mumbai');
+ERROR 1054 (42S22): Unknown column 'city' in 'where clause'
+mysql> SELECT *
+    -> FROM employees
+    -> WHERE salry != 30000;
+ERROR 1054 (42S22): Unknown column 'salry' in 'where clause'
+mysql> SELECT *
+    -> FROM employees
+    -> WHERE salary != 30000;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           1 | Amit          |           101 | 50000.00 |
+|           2 | Priya         |           102 | 60000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
+|           4 | Neha          |           103 | 45000.00 |
++-------------+---------------+---------------+----------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT department , MIN(salary)
+    -> FROM employees
+    -> GROUP BY department;
+ERROR 1054 (42S22): Unknown column 'department' in 'field list'
+mysql> SELECSELECT *
+    -> FROM employees
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECSELECT *
+FROM employees' at line 1
+mysql> SELECT * from
+    -> employees;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           1 | Amit          |           101 | 50000.00 |
+|           2 | Priya         |           102 | 60000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           6 | priya         |           106 | 30000.00 |
+|           7 | shree         |           109 | 30000.00 |
++-------------+---------------+---------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT department, SUM(salary) AS total_salary
+    -> FROM employees
+    -> GROUP BY department;
+ERROR 1054 (42S22): Unknown column 'department' in 'field list'
+mysql> SELECT *
+    -> FROM employees
+    -> WHERE employee_name LIKE '%a';
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           2 | Priya         |           102 | 60000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           6 | priya         |           106 | 30000.00 |
++-------------+---------------+---------------+----------+
+3 rows in set (0.00 sec)
+
+mysql>
+
