@@ -1,0 +1,176 @@
+ MySQL connection id is 13
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| banking_db         |
+| batch1334          |
+| classowrk_db       |
+| classwork_db       |
+| college            |
+| college_db         |
+| comapny_db         |
+| company_db         |
+| ecdac              |
+| employees          |
+| hr_db              |
+| information_schema |
+| keys_db            |
+| library_db         |
+| manager            |
+| mysql              |
+| performance_schema |
+| school             |
+| student_db         |
+| sys                |
+| xyz                |
++--------------------+
+21 rows in set (0.00 sec)
+
+mysql> use employees;
+Database changed
+mysql> DESC employees;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| employee_id   | int           | NO   | PRI | NULL    |       |
+| employee_name | varchar(50)   | YES  |     | NULL    |       |
+| department_id | int           | YES  |     | NULL    |       |
+| salary        | decimal(10,2) | YES  |     | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> DESC department;
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| department_id   | int         | NO   | PRI | NULL    |       |
+| department_name | varchar(50) | YES  |     | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> SELECT employee_name ,department_name
+    -> FROM employees
+    -> INNER JOIN  department
+    -> on employees.deoartment_id = department.department_id;
+ERROR 1054 (42S22): Unknown column 'employees.deoartment_id' in 'on clause'
+mysql> SELECT employee_name, department_name
+    -> FROM employees
+    -> INNER JOIN department
+    -> ON employees.department_id = department.department_id;
++---------------+-----------------+
+| employee_name | department_name |
++---------------+-----------------+
+| Rahul         | HR              |
+| Amit          | HR              |
+| Priya         | IT              |
+| Neha          | FINANCE         |
+| priya         | MARKETING       |
++---------------+-----------------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT employee_name,department_name
+    -> from employees
+    -> where salary > 50000
+    -> Inner join department
+    -> order by salary desc
+    -> on employees.department_id = department.department_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Inner join department
+order by salary desc
+on employees.department_id = departme' at line 4
+mysql> SELECT employee_name,department_name ,salary
+    -> from employees
+    -> INNER JOIN department
+    -> on employees.department_id = department.department_id
+    -> where salary> 50000
+    -> order by salary desc;
++---------------+-----------------+----------+
+| employee_name | department_name | salary   |
++---------------+-----------------+----------+
+| Priya         | IT              | 60000.00 |
+| Rahul         | HR              | 55000.00 |
++---------------+-----------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT employee_name,department_name,salary
+    -> from employees
+    -> INNER JOIN deartment
+    -> on employees.department_id = department.department_name
+    ->  where  department_name = 'HR'
+    -> order by SALARY  DESC;
+ERROR 1146 (42S02): Table 'employees.deartment' doesn't exist
+mysql> SELECT employee_name, department_name, salary
+    -> FROM employees
+    -> INNER JOIN department
+    -> ON employees.department_id = department.department_id
+    -> WHERE department_name = 'HR'
+    -> ORDER BY salary DESC;
++---------------+-----------------+----------+
+| employee_name | department_name | salary   |
++---------------+-----------------+----------+
+| Rahul         | HR              | 55000.00 |
+| Amit          | HR              | 50000.00 |
++---------------+-----------------+----------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> SELECT employee_name, department_name, salary
+    -> from employees
+    -> INNER JOIN department
+    -> on employees.department_id = department.department_id;
++---------------+-----------------+----------+
+| employee_name | department_name | salary   |
++---------------+-----------------+----------+
+| Amit          | HR              | 50000.00 |
+| Priya         | IT              | 60000.00 |
+| Rahul         | HR              | 55000.00 |
+| Neha          | FINANCE         | 45000.00 |
+| priya         | MARKETING       | 30000.00 |
++---------------+-----------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT employee_name,department_name ,salary
+    -> from employees
+    -> INNER JOIN department
+    -> on employees.deoartment_id = department.department_id
+    -> where  department_name = "finance"
+    -> order by salary DESC;
+ERROR 1054 (42S22): Unknown column 'employees.deoartment_id' in 'on clause'
+mysql> SELECT employee_name, department_name, salary
+    -> FROM employees
+    -> INNER JOIN department
+    -> ON employees.department_id = department.department_id
+    -> WHERE department_name = 'FINANCE'
+    -> ORDER BY salary DESC;
++---------------+-----------------+----------+
+| employee_name | department_name | salary   |
++---------------+-----------------+----------+
+| Neha          | FINANCE         | 45000.00 |
++---------------+-----------------+----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT employee_name, department_name, salary
+    -> FROM employees
+    -> INNER JOIN department
+    -> ON employees.department_id = department.department_id
+    -> WHERE salary > 45000
+    -> AND (department_name = 'IT' OR department_name = 'HR')
+    -> ORDER BY salary DESC;
++---------------+-----------------+----------+
+| employee_name | department_name | salary   |
++---------------+-----------------+----------+
+| Priya         | IT              | 60000.00 |
+| Rahul         | HR              | 55000.00 |
+| Amit          | HR              | 50000.00 |
++---------------+-----------------+----------+
+3 rows in set (0.00 sec)
