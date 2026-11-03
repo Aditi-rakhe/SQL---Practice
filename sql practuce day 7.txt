@@ -1,0 +1,276 @@
+Microsoft Windows [Version 10.0.19045.7417]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\MAC>mysql -u root -p
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use employees;
+Database changed
+mysql> SELECT * FROM employees;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           1 | Amit          |           101 | 50000.00 |
+|           2 | Priya         |           102 | 60000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           6 | priya         |           106 | 30000.00 |
+|           7 | shree         |           109 | 30000.00 |
++-------------+---------------+---------------+----------+
+6 rows in set (0.03 sec)
+
+mysql> SELECT name, salary
+    -> FROM employees;
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql> select employee_name ,salary
+    -> from employees;
++---------------+----------+
+| employee_name | salary   |
++---------------+----------+
+| Amit          | 50000.00 |
+| Priya         | 60000.00 |
+| Rahul         | 55000.00 |
+| Neha          | 45000.00 |
+| priya         | 30000.00 |
+| shree         | 30000.00 |
++---------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM employees
+    -> ORDER BY salary ASC;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           6 | priya         |           106 | 30000.00 |
+|           7 | shree         |           109 | 30000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           1 | Amit          |           101 | 50000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
+|           2 | Priya         |           102 | 60000.00 |
++-------------+---------------+---------------+----------+
+6 rows in set (0.01 sec)
+
+mysql> SELECT max(salary)
+    -> from employees;
++-------------+
+| max(salary) |
++-------------+
+|    60000.00 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT count(*)
+    -> from employees;
++----------+
+| count(*) |
++----------+
+|        6 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> SELECT avg(salary)
+    -> from employees;
++--------------+
+| avg(salary)  |
++--------------+
+| 45000.000000 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT department_id, AVG(salary)
+    -> FROM employees
+    -> GROUP BY department_id;
++---------------+--------------+
+| department_id | AVG(salary)  |
++---------------+--------------+
+|           101 | 52500.000000 |
+|           102 | 60000.000000 |
+|           103 | 45000.000000 |
+|           106 | 30000.000000 |
+|           109 | 30000.000000 |
++---------------+--------------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT department_id ,count(*)
+    -> from employees
+    -> GROUP BY department_id
+    -> having count(*)>1;
++---------------+----------+
+| department_id | count(*) |
++---------------+----------+
+|           101 |        2 |
++---------------+----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT e.employee_name ,d.department_name
+    -> from employees e
+    -> INNER join department d
+    -> on d.department_id = d.department_id;
++---------------+-----------------+
+| employee_name | department_name |
++---------------+-----------------+
+| shree         | HR              |
+| priya         | HR              |
+| Neha          | HR              |
+| Rahul         | HR              |
+| Priya         | HR              |
+| Amit          | HR              |
+| shree         | IT              |
+| priya         | IT              |
+| Neha          | IT              |
+| Rahul         | IT              |
+| Priya         | IT              |
+| Amit          | IT              |
+| shree         | FINANCE         |
+| priya         | FINANCE         |
+| Neha          | FINANCE         |
+| Rahul         | FINANCE         |
+| Priya         | FINANCE         |
+| Amit          | FINANCE         |
+| shree         | SALES           |
+| priya         | SALES           |
+| Neha          | SALES           |
+| Rahul         | SALES           |
+| Priya         | SALES           |
+| Amit          | SALES           |
+| shree         | OPERATIONS      |
+| priya         | OPERATIONS      |
+| Neha          | OPERATIONS      |
+| Rahul         | OPERATIONS      |
+| Priya         | OPERATIONS      |
+| Amit          | OPERATIONS      |
+| shree         | MARKETING       |
+| priya         | MARKETING       |
+| Neha          | MARKETING       |
+| Rahul         | MARKETING       |
+| Priya         | MARKETING       |
+| Amit          | MARKETING       |
+| shree         | ADMIN           |
+| priya         | ADMIN           |
+| Neha          | ADMIN           |
+| Rahul         | ADMIN           |
+| Priya         | ADMIN           |
+| Amit          | ADMIN           |
++---------------+-----------------+
+42 rows in set (0.02 sec)
+
+mysql> SELECT MAX(salary)
+    -> from employees
+    -> where  salary >max(salary)
+    -> ;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> SELECT max (salary)
+    -> from employees
+    -> where salary <(
+    -> select max(salary)
+    -> from employees;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 5
+mysql> SELECT MAX(salary)
+    -> FROM employees
+    -> WHERE salary < (
+    ->     SELECT MAX(salary)
+    ->     FROM employees
+    -> );
++-------------+
+| MAX(salary) |
++-------------+
+|    55000.00 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELESELECT MAX(salary)
+    -> FROM employees
+    -> WHERE salary < (
+    ->     SELECT MAX(salary)
+    ->     FROM employees
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELESELECT MAX(salary)
+FROM employees
+WHERE salary < (
+    SELECT MAX(salary)
+  ' at line 1
+mysql> desc department;
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| department_id   | int         | NO   | PRI | NULL    |       |
+| department_name | varchar(50) | YES  |     | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+2 rows in set (0.02 sec)
+
+mysql> SELECT department_name
+    -> from employees;
+ERROR 1054 (42S22): Unknown column 'department_name' in 'field list'
+mysql> SELECT d.department_id,d.department_name
+    -> from department d
+    -> LEFT join employee e
+    -> on d.department_id = e.department_id
+    -> where e.department_id is null;
+ERROR 1146 (42S02): Table 'employees.employee' doesn't exist
+mysql> SELECT d.department_id, d.department_name
+    -> FROM department d
+    -> LEFT JOIN employees e
+    -> ON d.department_id = e.department_id
+    -> WHERE e.department_id IS NULL;
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+|           104 | SALES           |
+|           105 | OPERATIONS      |
+|           107 | ADMIN           |
++---------------+-----------------+
+3 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
