@@ -1,0 +1,600 @@
+Microsoft Windows [Version 10.0.19045.7417]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\MAC>mysql -u root -p
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use company_db1;
+Database changed
+mysql> CREATE TABLE employees (
+    -> employee_id INT PRIMARY KEY,
+    -> employee_name VARCHAR(50),
+    -> department VARCHAR(30),
+    -> salary INT,
+    -> city VARCHAR(30)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> DESC company_db1;
+ERROR 1146 (42S02): Table 'company_db1.company_db1' doesn't exist
+mysql> desc tables;
+ERROR 1146 (42S02): Table 'company_db1.tables' doesn't exist
+mysql> SHOW tables;
++-----------------------+
+| Tables_in_company_db1 |
++-----------------------+
+| employees             |
++-----------------------+
+1 row in set (0.01 sec)
+
+mysql> desc employees;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| employee_id   | int         | NO   | PRI | NULL    |       |
+| employee_name | varchar(50) | YES  |     | NULL    |       |
+| department    | varchar(30) | YES  |     | NULL    |       |
+| salary        | int         | YES  |     | NULL    |       |
+| city          | varchar(30) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> INSERT INTO employees
+    -> (employee_id, employee_name, department, salary, city)
+    -> VALUES
+    -> (1, 'Amit', 'HR', 35000, 'Pune'),
+    -> (2, 'Priya', 'IT', 50000, 'Mumbai'),
+    -> (3, 'Rahul', 'Finance', 45000, 'Pune'),
+    -> (4, 'Neha', 'IT', 60000, 'Nashik'),
+    -> (5, 'Shree', 'HR', 30000, 'Nanded'),
+    -> (6, 'Karan', 'Finance', 55000, 'Pune'),
+    -> (7, 'Sneha', 'Marketing', 40000, 'Mumbai'),
+    -> (8, 'Rohan', 'IT', 65000, 'Pune'),
+    -> (9, 'Pooja', 'Marketing', 42000, 'Nashik'),
+    -> (10, 'Akash', 'HR', 38000, 'Mumbai');
+Query OK, 10 rows affected (0.03 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * from employees;
++-------------+---------------+------------+--------+--------+
+| employee_id | employee_name | department | salary | city   |
++-------------+---------------+------------+--------+--------+
+|           1 | Amit          | HR         |  35000 | Pune   |
+|           2 | Priya         | IT         |  50000 | Mumbai |
+|           3 | Rahul         | Finance    |  45000 | Pune   |
+|           4 | Neha          | IT         |  60000 | Nashik |
+|           5 | Shree         | HR         |  30000 | Nanded |
+|           6 | Karan         | Finance    |  55000 | Pune   |
+|           7 | Sneha         | Marketing  |  40000 | Mumbai |
+|           8 | Rohan         | IT         |  65000 | Pune   |
+|           9 | Pooja         | Marketing  |  42000 | Nashik |
+|          10 | Akash         | HR         |  38000 | Mumbai |
++-------------+---------------+------------+--------+--------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT employee_name, salary
+    -> FROM employees;
++---------------+--------+
+| employee_name | salary |
++---------------+--------+
+| Amit          |  35000 |
+| Priya         |  50000 |
+| Rahul         |  45000 |
+| Neha          |  60000 |
+| Shree         |  30000 |
+| Karan         |  55000 |
+| Sneha         |  40000 |
+| Rohan         |  65000 |
+| Pooja         |  42000 |
+| Akash         |  38000 |
++---------------+--------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM employees
+    -> WHERE salary > 40000;
++-------------+---------------+------------+--------+--------+
+| employee_id | employee_name | department | salary | city   |
++-------------+---------------+------------+--------+--------+
+|           2 | Priya         | IT         |  50000 | Mumbai |
+|           3 | Rahul         | Finance    |  45000 | Pune   |
+|           4 | Neha          | IT         |  60000 | Nashik |
+|           6 | Karan         | Finance    |  55000 | Pune   |
+|           8 | Rohan         | IT         |  65000 | Pune   |
+|           9 | Pooja         | Marketing  |  42000 | Nashik |
++-------------+---------------+------------+--------+--------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM employees
+    -> WHERE department = 'IT';
++-------------+---------------+------------+--------+--------+
+| employee_id | employee_name | department | salary | city   |
++-------------+---------------+------------+--------+--------+
+|           2 | Priya         | IT         |  50000 | Mumbai |
+|           4 | Neha          | IT         |  60000 | Nashik |
+|           8 | Rohan         | IT         |  65000 | Pune   |
++-------------+---------------+------------+--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * from
+    -> employees
+    -> where salary between 30000 and 50000;
++-------------+---------------+------------+--------+--------+
+| employee_id | employee_name | department | salary | city   |
++-------------+---------------+------------+--------+--------+
+|           1 | Amit          | HR         |  35000 | Pune   |
+|           2 | Priya         | IT         |  50000 | Mumbai |
+|           3 | Rahul         | Finance    |  45000 | Pune   |
+|           5 | Shree         | HR         |  30000 | Nanded |
+|           7 | Sneha         | Marketing  |  40000 | Mumbai |
+|           9 | Pooja         | Marketing  |  42000 | Nashik |
+|          10 | Akash         | HR         |  38000 | Mumbai |
++-------------+---------------+------------+--------+--------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM employees
+    -> where department IN ('HR','IT');
++-------------+---------------+------------+--------+--------+
+| employee_id | employee_name | department | salary | city   |
++-------------+---------------+------------+--------+--------+
+|           1 | Amit          | HR         |  35000 | Pune   |
+|           2 | Priya         | IT         |  50000 | Mumbai |
+|           4 | Neha          | IT         |  60000 | Nashik |
+|           5 | Shree         | HR         |  30000 | Nanded |
+|           8 | Rohan         | IT         |  65000 | Pune   |
+|          10 | Akash         | HR         |  38000 | Mumbai |
++-------------+---------------+------------+--------+--------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM employees
+    -> WHERE  salary  > 40000
+    -> AND department = 'IT';
++-------------+---------------+------------+--------+--------+
+| employee_id | employee_name | department | salary | city   |
++-------------+---------------+------------+--------+--------+
+|           2 | Priya         | IT         |  50000 | Mumbai |
+|           4 | Neha          | IT         |  60000 | Nashik |
+|           8 | Rohan         | IT         |  65000 | Pune   |
++-------------+---------------+------------+--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> ;
+ERROR 1096 (HY000): No tables used
+mysql> SELECT max(salary)
+    -> FROM employees;
++-------------+
+| max(salary) |
++-------------+
+|       65000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT AVG(salary)
+    -> FROM employees;
++-------------+
+| AVG(salary) |
++-------------+
+|  46000.0000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT count(*)
+    -> ;
++----------+
+| count(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT employee_name ,department,count(*)
+    -> FROM employees;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'company_db1.employees.employee_name'; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECql> SELECT AVG(salary)
+    ->     -> FROM employees;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECql> SELECT AVG(salary)
+    -> FROM employees' at line 1
+mysql> +-------------+
+    -> | AVG(salary) |
+    -> +-------------+
+    -> |  46000.0000 |
+    -> +-------------+T
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+-------------+
+| AVG(salary) |
++-------------+
+|  46000.0000 |
++-------------+T' at line 1
+mysql> SELECT employee_name, department,count(*)
+    -> FROM EMPLOYEES
+    -> group by  department
+    -> ;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'company_db1.EMPLOYEES.employee_name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT department, COUNT(*) AS total_employees
+    -> FROM employees
+    -> GROUP BY department;
++------------+-----------------+
+| department | total_employees |
++------------+-----------------+
+| HR         |               3 |
+| IT         |               3 |
+| Finance    |               2 |
+| Marketing  |               2 |
++------------+-----------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT department,count(*) AS total_employees
+    -> FROM employees
+    -> GROU BY department;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'BY department' at line 3
+mysql> SELECT department ,count(*) as total_employees
+    -> FROM employees
+    -> GROUP BY department;
++------------+-----------------+
+| department | total_employees |
++------------+-----------------+
+| HR         |               3 |
+| IT         |               3 |
+| Finance    |               2 |
+| Marketing  |               2 |
++------------+-----------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT department, sum(salary) as total_salary
+    -> FROM employees
+    -> GROUP by department;
++------------+--------------+
+| department | total_salary |
++------------+--------------+
+| HR         |       103000 |
+| IT         |       175000 |
+| Finance    |       100000 |
+| Marketing  |        82000 |
++------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT department ,AVG(salary) as average_salary
+    -> FROM employees
+    -> GROUP by department;
++------------+----------------+
+| department | average_salary |
++------------+----------------+
+| HR         |     34333.3333 |
+| IT         |     58333.3333 |
+| Finance    |     50000.0000 |
+| Marketing  |     41000.0000 |
++------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> SELCET department ,max(salary)
+    -> FROM employees
+    -> GROUP BY department
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELCET department ,max(salary)
+FROM employees
+GROUP BY department' at line 1
+mysql> SELECT MAX(salary)
+    -> FROM employees
+    -> WHERE department = 'IT';
++-------------+
+| MAX(salary) |
++-------------+
+|       65000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT department, MAX(salary)
+    -> FROM employees
+    -> GROUP BY department;
++------------+-------------+
+| department | MAX(salary) |
++------------+-------------+
+| HR         |       38000 |
+| IT         |       65000 |
+| Finance    |       55000 |
+| Marketing  |       42000 |
++------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT department
+    -> from employees
+    -> where salary  > 40000;
++------------+
+| department |
++------------+
+| IT         |
+| Finance    |
+| IT         |
+| Finance    |
+| IT         |
+| Marketing  |
++------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT depart SELECT department
+    ->     -> from employees
+    ->     -> where salary  > 40000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT department
+    -> from employees
+    -> where salary  > 40000' at line 1
+mysql> +------------+
+    -> | department |
+    -> +------------+
+    -> | IT         |
+    -> | Finance    |
+    -> | IT         |
+    -> | Finance    |
+    -> | IT         |
+    -> | Marketing  |
+    -> +------------+
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '+------------+
+| department |
++------------+
+| IT         |
+| Finance    |
+| IT ' at line 1
+mysql> select department, AVG(salary) AS average_salary
+    -> from employees
+    -> group by department
+    -> having AVG(salary)>40000;
++------------+----------------+
+| department | average_salary |
++------------+----------------+
+| IT         |     58333.3333 |
+| Finance    |     50000.0000 |
+| Marketing  |     41000.0000 |
++------------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> USE company_db;
+Database changed
+mysql> CREATE TABLE departments (
+    ->     department_id INT PRIMARY KEY,
+    ->     department_name VARCHAR(30)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO departments VALUES
+    -> (101, 'HR'),
+    -> (102, 'IT'),
+    -> (103, 'Finance'),
+    -> (104, 'Marketing'),
+    -> (105, 'Sales');
+Query OK, 5 rows affected (0.03 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM departments;
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+|           101 | HR              |
+|           102 | IT              |
+|           103 | Finance         |
+|           104 | Marketing       |
+|           105 | Sales           |
++---------------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++----------------------+
+| Tables_in_company_db |
++----------------------+
+| course               |
+| departments          |
+| employee             |
+| enrollment           |
+| student              |
+| teacher              |
++----------------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT * FROM departments;
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+|           101 | HR              |
+|           102 | IT              |
+|           103 | Finance         |
+|           104 | Marketing       |
+|           105 | Sales           |
++---------------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> from employees;
+ERROR 1146 (42S02): Table 'company_db.employees' doesn't exist
+mysql> select * from employee;
++--------+----------+------------+----------+------------+
+| emp_id | emp_name | department | salary   | manager_id |
++--------+----------+------------+----------+------------+
+|      1 | Rahul    | IT         | 33000.00 |        101 |
+|      2 | Priya    | HR         | 27500.00 |        102 |
+|      3 | AMIT     | IT         | 26400.00 |        103 |
++--------+----------+------------+----------+------------+
+3 rows in set (0.01 sec)
+
+mysql> use company_db1;
+Database changed
+mysql> show tables;
++-----------------------+
+| Tables_in_company_db1 |
++-----------------------+
+| employees             |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> CREATE TABLE departments (
+    ->     department_id INT PRIMARY KEY,
+    ->     department_name VARCHAR(30)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO departments VALUES
+    -> (101, 'HR'),
+    -> (102, 'IT'),
+    -> (103, 'Finance'),
+    -> (104, 'Marketing'),
+    -> (105, 'Sales');
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM departments;
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+|           101 | HR              |
+|           102 | IT              |
+|           103 | Finance         |
+|           104 | Marketing       |
+|           105 | Sales           |
++---------------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECSELECT  employee_name ,department_name  from t inner join  on e.employee_name = d.department_nameT;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECSELECT  employee_name ,department_name  from t inner join  on e.employee_na' at line 1
+mysql> SELECT employees.employee_name, departments.department_name from employees
+    -> inner join departments
+    -> on employees.department = depaSELECT  employe;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'employe' at line 3
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> SELECT employees.employee_name = departments.department_name
+    -> FROM employees
+    -> INNER JOIN departments
+    -> on employees.department = department_name;
++-------------------------------------------------------+
+| employees.employee_name = departments.department_name |
++-------------------------------------------------------+
+|                                                     0 |
+|                                                     0 |
+|                                                     0 |
+|                                                     0 |
+|                                                     0 |
+|                                                     0 |
+|                                                     0 |
+|                                                     0 |
+|                                                     0 |
+|                                                     0 |
++-------------------------------------------------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT employees.employee_name, departments.department_name
+    -> FROM employees
+    -> INNER JOIN departments
+    -> ON employees.department = departments.department_name;
++---------------+-----------------+
+| employee_name | department_name |
++---------------+-----------------+
+| Amit          | HR              |
+| Priya         | IT              |
+| Rahul         | Finance         |
+| Neha          | IT              |
+| Shree         | HR              |
+| Karan         | Finance         |
+| Sneha         | Marketing       |
+| Rohan         | IT              |
+| Pooja         | Marketing       |
+| Akash         | HR              |
++---------------+-----------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT  employees.employee_name ,department.department_name
+    -> from employees
+    -> LEFT join department
+    -> on employes. departSELECT employees.employee_name, departments.department_name
+    -> FROM employees
+    -> INNER JOIN departments
+    -> ON employees.department = departments.department_name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'employees.employee_name, departments.department_name
+FROM employees
+INNER JOIN d' at line 4
+mysql> SELECT employees.employee_name, departments.department_name
+    -> FROM employees
+    -> LEFT JOIN departments
+    -> ON employees.department = departments.department_name;
++---------------+-----------------+
+| employee_name | department_name |
++---------------+-----------------+
+| Amit          | HR              |
+| Priya         | IT              |
+| Rahul         | Finance         |
+| Neha          | IT              |
+| Shree         | HR              |
+| Karan         | Finance         |
+| Sneha         | Marketing       |
+| Rohan         | IT              |
+| Pooja         | Marketing       |
+| Akash         | HR              |
++---------------+-----------------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT  employees
+    -> RIGHT join departments
+    -> on employees.department = departments.department_name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'RIGHT join departments
+on employees.department = departments.department_name' at line 2
+mysql> SELECT employees.employee_name , departments.department_name from employees
+    -> RIGHT JOIN departments
+    -> on employees.department = department.department_name;
+ERROR 1054 (42S22): Unknown column 'department.department_name' in 'on clause'
+mysql> SELECT  employees.employee_name ,department.department_name from employees
+    -> RIGHT JOIN depaSELECT employees.employee_name, departments.department_name
+    -> FROM employees
+    -> RIGHT JOIN departments
+    -> on employees.department = departments.department_name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.employee_name, departments.department_name
+FROM employees
+RIGHT JOIN department' at line 2
+mysql> SELECT employees.employee_name, departments.department_name
+    -> FROM employees
+    -> RIGHT JOIN departments
+    -> ON employees.department = departments.department_name;
++---------------+-----------------+
+| employee_name | department_name |
++---------------+-----------------+
+| Akash         | HR              |
+| Shree         | HR              |
+| Amit          | HR              |
+| Rohan         | IT              |
+| Neha          | IT              |
+| Priya         | IT              |
+| Karan         | Finance         |
+| Rahul         | Finance         |
+| Pooja         | Marketing       |
+| Sneha         | Marketing       |
+| NULL          | Sales           |
++---------------+-----------------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT employees.employee_name, departments.department_name
+    -> FROM employees
+    -> INNER JOIN departments
+    -> ON employees.department = departments.department_name
+    -> WHERE departments.department_name = 'IT';
++---------------+-----------------+
+| employee_name | department_name |
++---------------+-----------------+
+| Priya         | IT              |
+| Neha          | IT              |
+| Rohan         | IT              |
++---------------+-----------------+
+3 rows in set (0.00 sec)
