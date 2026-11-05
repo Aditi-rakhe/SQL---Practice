@@ -1,0 +1,148 @@
+mysql> use employees;
+Database changed
+mysql> show tables;
++---------------------+
+| Tables_in_employees |
++---------------------+
+| department          |
+| employees           |
++---------------------+
+2 rows in set (0.00 sec)
+
+mysql> desc employees;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| employee_id   | int           | NO   | PRI | NULL    |       |
+| employee_name | varchar(50)   | YES  |     | NULL    |       |
+| department_id | int           | YES  |     | NULL    |       |
+| salary        | decimal(10,2) | YES  |     | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+4 rows in set (0.04 sec)
+
+mysql> select * from employees;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           1 | Amit          |           101 | 50000.00 |
+|           2 | Priya         |           102 | 60000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           6 | priya         |           106 | 30000.00 |
+|           7 | shree         |           109 | 30000.00 |
++-------------+---------------+---------------+----------+
+6 rows in set (0.03 sec)
+
+mysql> select*from departments;
+ERROR 1146 (42S02): Table 'employees.departments' doesn't exist
+mysql> select * from department;
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+|           101 | HR              |
+|           102 | IT              |
+|           103 | FINANCE         |
+|           104 | SALES           |
+|           105 | OPERATIONS      |
+|           106 | MARKETING       |
+|           107 | ADMIN           |
++---------------+-----------------+
+7 rows in set (0.01 sec)
+
+mysql> SELECT employees.employee_name,
+    ->        department.department_name
+    -> FROM employees
+    -> INNER JOIN department
+    -> ON employees.department_id = department.department_id;
++---------------+-----------------+
+| employee_name | department_name |
++---------------+-----------------+
+| Amit          | HR              |
+| Priya         | IT              |
+| Rahul         | HR              |
+| Neha          | FINANCE         |
+| priya         | MARKETING       |
++---------------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT employees.employee_name,salary ,department.department_name
+    -> from employees
+    -> INNER JOIN department
+    -> on employees.department_id,employees.salary = depsrtment.department_name;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= depsrtment.department_name' at line 4
+mysql> SELECT employees.employee_name,
+    ->        employees.salary,
+    ->        department.department_name
+    -> FROM employees
+    -> INNER JOIN department
+    -> ON employees.department_id = department.department_id;
++---------------+----------+-----------------+
+| employee_name | salary   | department_name |
++---------------+----------+-----------------+
+| Amit          | 50000.00 | HR              |
+| Priya         | 60000.00 | IT              |
+| Rahul         | 55000.00 | HR              |
+| Neha          | 45000.00 | FINANCE         |
+| priya         | 30000.00 | MARKETING       |
++---------------+----------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT employees.employee_name,
+    ->        employees.salary,
+    ->        department.department_name
+    -> FROM employees
+    -> INNER JOIN department
+    -> ON employees.department_id = department.department_id
+    -> WHERE employees.salary > 45000;
++---------------+----------+-----------------+
+| employee_name | salary   | department_name |
++---------------+----------+-----------------+
+| Amit          | 50000.00 | HR              |
+| Priya         | 60000.00 | IT              |
+| Rahul         | 55000.00 | HR              |
++---------------+----------+-----------------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT employees.employee_name,
+    ->        department.department_name,
+    ->        employees.salary
+    -> FROM employees
+    -> LEFT JOIN department
+    -> ON employees.department_id = department.department_id;
++---------------+-----------------+----------+
+| employee_name | department_name | salary   |
++---------------+-----------------+----------+
+| Amit          | HR              | 50000.00 |
+| Priya         | IT              | 60000.00 |
+| Rahul         | HR              | 55000.00 |
+| Neha          | FINANCE         | 45000.00 |
+| priya         | MARKETING       | 30000.00 |
+| shree         | NULL            | 30000.00 |
++---------------+-----------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM employees
+    -> WHERE department_id IS NULL;
+Empty set (0.01 sec)
+
+mysql> SELECT *
+    -> FROM employees
+    -> WHERE department_id IS NOT NULL;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           1 | Amit          |           101 | 50000.00 |
+|           2 | Priya         |           102 | 60000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           6 | priya         |           106 | 30000.00 |
+|           7 | shree         |           109 | 30000.00 |
++-------------+---------------+---------------+----------+
+6 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
