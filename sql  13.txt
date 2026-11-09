@@ -1,0 +1,134 @@
++--------------------+
+22 rows in set (0.10 sec)
+
+mysql> use employees;
+Database changed
+mysql> show tables;
++---------------------+
+| Tables_in_employees |
++---------------------+
+| department          |
+| employees           |
++---------------------+
+2 rows in set (0.02 sec)
+
+mysql> select * from
+    -> employees;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           1 | Amit          |           101 | 50000.00 |
+|           2 | Priya         |           102 | 60000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           6 | priya         |           106 | 30000.00 |
+|           7 | shree         |           109 | 30000.00 |
++-------------+---------------+---------------+----------+
+6 rows in set (0.03 sec)
+
+mysql> select * from
+    -> department;
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+|           101 | HR              |
+|           102 | IT              |
+|           103 | FINANCE         |
+|           104 | SALES           |
+|           105 | OPERATIONS      |
+|           106 | MARKETING       |
+|           107 | ADMIN           |
++---------------+-----------------+
+7 rows in set (0.01 sec)
+
+mysql> SELECT *
+    -> from
+    ->
+    -> employees;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           1 | Amit          |           101 | 50000.00 |
+|           2 | Priya         |           102 | 60000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           6 | priya         |           106 | 30000.00 |
+|           7 | shree         |           109 | 30000.00 |
++-------------+---------------+---------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select *
+    -> from employees
+    -> inner join department
+    -> on employees.employee_id = department.department_id;
+Empty set (0.00 sec)
+
+mysql> SELECT employees.employee_name,
+    ->        employees.salary,
+    ->        department.department_name
+    -> FROM employees
+    -> LEFT JOIN department
+    -> ON employees.department_id = department.department_id;
++---------------+----------+-----------------+
+| employee_name | salary   | department_name |
++---------------+----------+-----------------+
+| Amit          | 50000.00 | HR              |
+| Priya         | 60000.00 | IT              |
+| Rahul         | 55000.00 | HR              |
+| Neha          | 45000.00 | FINANCE         |
+| priya         | 30000.00 | MARKETING       |
+| shree         | 30000.00 | NULL            |
++---------------+----------+-----------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT employees.employee_name,
+    ->        employees.salary,
+    ->        department.department_name
+    -> FROM employees
+    -> RIGHT JOIN department
+    -> ON employees.department_id = department.department_id;
++---------------+----------+-----------------+
+| employee_name | salary   | department_name |
++---------------+----------+-----------------+
+| Rahul         | 55000.00 | HR              |
+| Amit          | 50000.00 | HR              |
+| Priya         | 60000.00 | IT              |
+| Neha          | 45000.00 | FINANCE         |
+| NULL          |     NULL | SALES           |
+| NULL          |     NULL | OPERATIONS      |
+| priya         | 30000.00 | MARKETING       |
+| NULL          |     NULL | ADMIN           |
++---------------+----------+-----------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT employees.employee_name,
+    ->        employees.salary,
+    ->        department.department_name
+    -> FROM employees
+    -> INNER JOIN department
+    -> ON employees.department_id = department.department_id
+    -> WHERE employees.salary > 45000;
++---------------+----------+-----------------+
+| employee_name | salary   | department_name |
++---------------+----------+-----------------+
+| Amit          | 50000.00 | HR              |
+| Priya         | 60000.00 | IT              |
+| Rahul         | 55000.00 | HR              |
++---------------+----------+-----------------+
+3 rows in set (0.02 sec)
+
+mysql> SELECT department.department_name,
+    ->        COUNT(employees.employee_id) AS total_employees
+    -> FROM employees
+    -> INNER JOIN department
+    -> ON employees.department_id = department.department_id
+    -> GROUP BY department.department_name;
++-----------------+-----------------+
+| department_name | total_employees |
++-----------------+-----------------+
+| HR              |               2 |
+| IT              |               1 |
+| FINANCE         |               1 |
+| MARKETING       |               1 |
++-----------------+-----------------+
+4 rows in set (0.01 sec)
