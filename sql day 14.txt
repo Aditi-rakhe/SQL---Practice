@@ -1,0 +1,281 @@
+icrosoft Windows [Version 10.0.19045.7417]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\MAC>mysql -u root -p
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| banking_db         |
+| batch1334          |
+| classowrk_db       |
+| classwork_db       |
+| college            |
+| college_db         |
+| comapny_db         |
+| company_db         |
+| company_db1        |
+| ecdac              |
+| employees          |
+| hr_db              |
+| information_schema |
+| keys_db            |
+| library_db         |
+| manager            |
+| mysql              |
+| performance_schema |
+| school             |
+| student_db         |
+| sys                |
+| xyz                |
++--------------------+
+22 rows in set (0.04 sec)
+
+mysql> use employees;
+Database changed
+mysql> select * from employees;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           1 | Amit          |           101 | 50000.00 |
+|           2 | Priya         |           102 | 60000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           6 | priya         |           106 | 30000.00 |
+|           7 | shree         |           109 | 30000.00 |
++-------------+---------------+---------------+----------+
+6 rows in set (0.03 sec)
+
+mysql> SELECT employee_name,salary
+    -> from employees;
++---------------+----------+
+| employee_name | salary   |
++---------------+----------+
+| Amit          | 50000.00 |
+| Priya         | 60000.00 |
+| Rahul         | 55000.00 |
+| Neha          | 45000.00 |
+| priya         | 30000.00 |
+| shree         | 30000.00 |
++---------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> from employees
+    -> where salary > 50000;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           2 | Priya         |           102 | 60000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
++-------------+---------------+---------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM EMPLOYEES
+    -> where salary < 40000;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           6 | priya         |           106 | 30000.00 |
+|           7 | shree         |           109 | 30000.00 |
++-------------+---------------+---------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM employees
+    -> WHERE salary = 60000;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           2 | Priya         |           102 | 60000.00 |
++-------------+---------------+---------------+----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *
+    -> from employees;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           1 | Amit          |           101 | 50000.00 |
+|           2 | Priya         |           102 | 60000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           6 | priya         |           106 | 30000.00 |
+|           7 | shree         |           109 | 30000.00 |
++-------------+---------------+---------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select employee_id 101
+    -> from employees;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '101
+from employees' at line 1
+mysql> SELECT *
+    -> FROM EMPLOYEES
+    -> WHERE EMPLOYEE_ID = 101;
+Empty set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM EMPLOYEES
+    -> WHERE EMPLOYEE_ID = 4;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           4 | Neha          |           103 | 45000.00 |
++-------------+---------------+---------------+----------+
+1 row in set (0.01 sec)
+
+mysql> SELECT *
+    -> FROM EMPLOYEES
+    -> WHERE SALARY > 50000;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           2 | Priya         |           102 | 60000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
++-------------+---------------+---------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM EMPLOYEES
+    -> WHERE SALARY = 60000;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           2 | Priya         |           102 | 60000.00 |
++-------------+---------------+---------------+----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM EMPLOYEES
+    -> ;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           1 | Amit          |           101 | 50000.00 |
+|           2 | Priya         |           102 | 60000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           6 | priya         |           106 | 30000.00 |
+|           7 | shree         |           109 | 30000.00 |
++-------------+---------------+---------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM EMPLOYEES
+    -> WHERE SALARY >40000  AND department_id =101;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           1 | Amit          |           101 | 50000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
++-------------+---------------+---------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT  *
+    -> FROM employees
+    -> where  department_id = 101 OR  department_id = 102 ;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           1 | Amit          |           101 | 50000.00 |
+|           2 | Priya         |           102 | 60000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
++-------------+---------------+---------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT  *
+    -> FROM  employees
+    -> where salary between 60000 and 40000;
+Empty set (0.00 sec)
+
+mysql> SELECT distinct (department_id)
+    -> from employees;
++---------------+
+| department_id |
++---------------+
+|           101 |
+|           102 |
+|           103 |
+|           106 |
+|           109 |
++---------------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT *
+    -> from employees
+    -> order by ASC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ASC' at line 3
+mysql> SELECT *FROM employeesORDER BY salary ASC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'BY salary ASC' at line 1
+mysql> selec
+    ->
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selec' at line 1
+mysql> select * from
+    -> employees
+    -> order by salary ASC;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           6 | priya         |           106 | 30000.00 |
+|           7 | shree         |           109 | 30000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           1 | Amit          |           101 | 50000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
+|           2 | Priya         |           102 | 60000.00 |
++-------------+---------------+---------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM EMPLOYEES
+    -> ORDER BY EMPLOYEE_ID DESC;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           7 | shree         |           109 | 30000.00 |
+|           6 | priya         |           106 | 30000.00 |
+|           4 | Neha          |           103 | 45000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
+|           2 | Priya         |           102 | 60000.00 |
+|           1 | Amit          |           101 | 50000.00 |
++-------------+---------------+---------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM EMPLOYEES
+    -> ORDER BY SALARY DESC
+    -> LIMIT;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 4
+mysql> SELECT *
+    -> FROM EMPLOYEES
+    -> ORDER BY SALARY DESC
+    -> LOMIT 3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'LOMIT 3' at line 4
+mysql> SELECT *
+    -> from employees
+    -> order by salary desc
+    -> limit 3;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|           2 | Priya         |           102 | 60000.00 |
+|           3 | Rahul         |           101 | 55000.00 |
+|           1 | Amit          |           101 | 50000.00 |
++-------------+---------------+---------------+----------+
+3 rows in set (0.00 sec)
+
+mysql>
