@@ -1,0 +1,134 @@
+mysql> use employee2026;
+Database changed
+mysql> show tables;
++------------------------+
+| Tables_in_employee2026 |
++------------------------+
+| department             |
+| employee2026           |
++------------------------+
+2 rows in set (0.00 sec)
+
+mysql> select *
+    -> from employee2026;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|         101 | amit          |            11 | 12000.00 |
+|         102 | Priya         |            12 | 25000.00 |
+|         103 | Rahul         |            11 | 30000.00 |
+|         104 | Neha          |            13 | 35000.00 |
+|         105 | Shree         |            14 | 28000.00 |
+|         106 | Kiran         |            12 | 40000.00 |
+|         107 | Sneha         |            13 | 45000.00 |
+|         108 | Amitesh       |            14 | 22000.00 |
+|         109 | Pooja         |            15 | 50000.00 |
+|         110 | Rohan         |            11 | 32000.00 |
++-------------+---------------+---------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> UPDATE department
+    -> SET deartment_id = deartment_id- 90;
+ERROR 1054 (42S22): Unknown column 'deartment_id' in 'field list'
+mysql> UPDATE department
+    -> SET department_id = department_id - 90;
+Query OK, 10 rows affected (0.01 sec)
+Rows matched: 10  Changed: 10  Warnings: 0
+
+mysql> select * from employee2026;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|         101 | amit          |            11 | 12000.00 |
+|         102 | Priya         |            12 | 25000.00 |
+|         103 | Rahul         |            11 | 30000.00 |
+|         104 | Neha          |            13 | 35000.00 |
+|         105 | Shree         |            14 | 28000.00 |
+|         106 | Kiran         |            12 | 40000.00 |
+|         107 | Sneha         |            13 | 45000.00 |
+|         108 | Amitesh       |            14 | 22000.00 |
+|         109 | Pooja         |            15 | 50000.00 |
+|         110 | Rohan         |            11 | 32000.00 |
++-------------+---------------+---------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM department;
++-----------------+---------------+
+| department_name | department_id |
++-----------------+---------------+
+| Finance         |            11 |
+| IT              |            12 |
+| sales           |            13 |
+| operations      |            14 |
+| marketing       |            15 |
+| Operations      |            16 |
+| Admin           |            17 |
+| IT Support      |            18 |
+| Research        |            19 |
+| Accounts        |            20 |
++-----------------+---------------+
+10 rows in set (0.00 sec)
+sql> SELECT
+    -> employee2026.employee_id,
+    -> employee2026.employee_name,
+    -> employee2026.department_id,
+    -> employee2026.salary
+    -> from employee2026
+    -> INNER JOIN department
+    -> on employee2026.department_id = department.department_id;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|         110 | Rohan         |            11 | 32000.00 |
+|         103 | Rahul         |            11 | 30000.00 |
+|         101 | amit          |            11 | 12000.00 |
+|         106 | Kiran         |            12 | 40000.00 |
+|         102 | Priya         |            12 | 25000.00 |
+|         107 | Sneha         |            13 | 45000.00 |
+|         104 | Neha          |            13 | 35000.00 |
+|         108 | Amitesh       |            14 | 22000.00 |
+|         105 | Shree         |            14 | 28000.00 |
+|         109 | Pooja         |            15 | 50000.00 |
++-------------+---------------+---------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT
+    -> employee2026.employee_id,
+    -> employee2026.employee_name,
+    -> employee2026.department_id,
+    -> employee2026.salary
+    -> from employee2026
+    -> LEFT JOIN  department
+    -> on employee2026.department_id = department.department_id;
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|         101 | amit          |            11 | 12000.00 |
+|         102 | Priya         |            12 | 25000.00 |
+|         103 | Rahul         |            11 | 30000.00 |
+|         104 | Neha          |            13 | 35000.00 |
+|         105 | Shree         |            14 | 28000.00 |
+|         106 | Kiran         |            12 | 40000.00 |
+|         107 | Sneha         |            13 | 45000.00 |
+|         108 | Amitesh       |            14 | 22000.00 |
+|         109 | Pooja         |            15 | 50000.00 |
+|         110 | Rohan         |            11 | 32000.00 |
++-------------+---------------+---------------+----------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM employee2026
+    -> where salary>(
+    -> SELECT AVG(salary)
+    -> from employee2026);
++-------------+---------------+---------------+----------+
+| employee_id | employee_name | department_id | salary   |
++-------------+---------------+---------------+----------+
+|         104 | Neha          |            13 | 35000.00 |
+|         106 | Kiran         |            12 | 40000.00 |
+|         107 | Sneha         |            13 | 45000.00 |
+|         109 | Pooja         |            15 | 50000.00 |
+|         110 | Rohan         |            11 | 32000.00 |
++-------------+---------------+---------------+----------+
+5 rows in set (0.01 sec)
